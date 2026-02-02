@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Performance{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2>Performance Reviews</h2>
+    <a href="{{ url_for('main.add_performance') }}" class="btn">Add Review</a>
+
+    <!-- Desktop Table View -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee</th>
+                    <th>Reviewer</th>
+                    <th>Rating</th>
+                    <th>Review Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in reviews %}
+                <tr>
+                    <td>{{ review.id }}</td>
+                    <td>{{ review.reviewed_employee.first_name }} {{ review.reviewed_employee.last_name }}</td>
+                    <td>{{ review.reviewer.first_name }} {{ review.reviewer.last_name }}</td>
+                    <td>{{ review.rating }}/5</td>
+                    <td>{{ review.review_date.strftime('%Y-%m-%d') if review.review_date else 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="card-container">
+        {% for review in reviews %}
+        <div class="mobile-card">
+            <div class="card-header">
+                <h3>{{ review.reviewed_employee.first_name }} {{ review.reviewed_employee.last_name }}</h3>
+                <span class="card-id">#{{ review.id }}</span>
+            </div>
+            <div class="card-content">
+                <div class="card-row">
+                    <strong>Reviewer:</strong> {{ review.reviewer.first_name }} {{ review.reviewer.last_name }}
+                </div>
+                <div class="card-row">
+                    <strong>Rating:</strong> {{ review.rating }}/5
+                </div>
+                <div class="card-row">
+                    <strong>Review Date:</strong> {{ review.review_date.strftime('%Y-%m-%d') if review.review_date else 'N/A' }}
+                </div>
+                {% if review.comments %}
+                <div class="card-row">
+                    <strong>Comments:</strong> {{ review.comments[:100] }}...
+                </div>
+                {% endif %}
+                {% if review.goals %}
+                <div class="card-row">
+                    <strong>Goals:</strong> {{ review.goals[:100] }}...
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

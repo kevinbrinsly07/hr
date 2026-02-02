@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Applications{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2>Job Applications</h2>
+    <a href="{{ url_for('main.add_application') }}" class="btn">Submit Application</a>
+
+    <!-- Desktop Table View -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Job Title</th>
+                    <th>Applicant Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Applied Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applications %}
+                <tr>
+                    <td>{{ application.id }}</td>
+                    <td>{{ application.job.title if application.job else 'N/A' }}</td>
+                    <td>{{ application.applicant_name }}</td>
+                    <td>{{ application.applicant_email }}</td>
+                    <td>{{ application.status }}</td>
+                    <td>{{ application.applied_date.strftime('%Y-%m-%d') if application.applied_date else 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="card-container">
+        {% for application in applications %}
+        <div class="mobile-card">
+            <div class="card-header">
+                <h3>{{ application.applicant_name }}</h3>
+                <span class="card-id">#{{ application.id }}</span>
+            </div>
+            <div class="card-content">
+                <div class="card-row">
+                    <strong>Job:</strong> {{ application.job.title if application.job else 'N/A' }}
+                </div>
+                <div class="card-row">
+                    <strong>Email:</strong> {{ application.applicant_email }}
+                </div>
+                <div class="card-row">
+                    <strong>Status:</strong> {{ application.status }}
+                </div>
+                <div class="card-row">
+                    <strong>Applied:</strong> {{ application.applied_date.strftime('%Y-%m-%d') if application.applied_date else 'N/A' }}
+                </div>
+                {% if application.resume %}
+                <div class="card-row">
+                    <strong>Resume:</strong> {{ application.resume[:100] }}...
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

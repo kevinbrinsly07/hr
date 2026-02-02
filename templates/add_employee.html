@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Add Employee{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Add New Employee</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.first_name.label }}<br>
+            {{ form.first_name(size=32) }}
+            {% for error in form.first_name.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.last_name.label }}<br>
+            {{ form.last_name(size=32) }}
+            {% for error in form.last_name.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}
+            {% for error in form.email.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.phone.label }}<br>
+            {{ form.phone(size=32) }}
+            {% for error in form.phone.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.hire_date.label }}<br>
+            {{ form.hire_date() }}
+            {% for error in form.hire_date.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.department.label }}<br>
+            {{ form.department(size=32) }}
+            {% for error in form.department.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.position.label }}<br>
+            {{ form.position(size=32) }}
+            {% for error in form.position.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.salary.label }}<br>
+            {{ form.salary() }}
+            {% for error in form.salary.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <a href="{{ url_for('main.employees') }}">Back to Employees</a>
+</div>
+{% endblock %}

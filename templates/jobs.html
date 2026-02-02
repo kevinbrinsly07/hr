@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Jobs{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2>Job Postings</h2>
+    <a href="{{ url_for('main.add_job') }}" class="btn">Post New Job</a>
+
+    <!-- Desktop Table View -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Posted Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                <tr>
+                    <td>{{ job.id }}</td>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.department or 'N/A' }}</td>
+                    <td>{{ job.status }}</td>
+                    <td>{{ job.posted_date.strftime('%Y-%m-%d') if job.posted_date else 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="card-container">
+        {% for job in jobs %}
+        <div class="mobile-card">
+            <div class="card-header">
+                <h3>{{ job.title }}</h3>
+                <span class="card-id">#{{ job.id }}</span>
+            </div>
+            <div class="card-content">
+                <div class="card-row">
+                    <strong>Department:</strong> {{ job.department or 'N/A' }}
+                </div>
+                <div class="card-row">
+                    <strong>Status:</strong> {{ job.status }}
+                </div>
+                <div class="card-row">
+                    <strong>Posted:</strong> {{ job.posted_date.strftime('%Y-%m-%d') if job.posted_date else 'N/A' }}
+                </div>
+                {% if job.description %}
+                <div class="card-row">
+                    <strong>Description:</strong> {{ job.description[:100] }}...
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HR Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <h1>HR Management System</h1>
+                <button class="burger-menu" id="burger-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+                <ul id="nav-menu">
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('main.index') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('main.employees') }}">Employees</a></li>
+                        <li><a href="{{ url_for('main.jobs') }}">Jobs</a></li>
+                        <li><a href="{{ url_for('main.applications') }}">Applications</a></li>
+                        <li><a href="{{ url_for('main.payroll') }}">Payroll</a></li>
+                        <li><a href="{{ url_for('main.benefits') }}">Benefits</a></li>
+                        <li><a href="{{ url_for('main.performance') }}">Performance</a></li>
+                        <li><a href="{{ url_for('main.compensation') }}">Compensation</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                        <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash">
+                            <span class="flash-text">{{ message }}</span>
+                            <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 HR Management System</p>
+    </footer>
+    <script>
+        document.getElementById('burger-menu').addEventListener('click', function() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+
+        // Auto-hide flash messages after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('.flash');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    message.style.opacity = '0';
+                    message.style.transform = 'translateY(-20px)';
+                    message.style.transition = 'all 0.5s ease';
+                    setTimeout(function() {
+                        if (message.parentElement) {
+                            message.remove();
+                        }
+                    }, 500);
+                }, 5000);
+            });
+
+            // Handle manual close button clicks
+            const closeButtons = document.querySelectorAll('.flash-close');
+            closeButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const flashMessage = this.parentElement;
+                    flashMessage.style.opacity = '0';
+                    flashMessage.style.transform = 'translateY(-20px)';
+                    flashMessage.style.transition = 'all 0.5s ease';
+                    setTimeout(function() {
+                        if (flashMessage.parentElement) {
+                            flashMessage.remove();
+                        }
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

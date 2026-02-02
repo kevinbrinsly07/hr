@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Add Job{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Post New Job</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}<br>
+            {{ form.title(size=64) }}
+            {% for error in form.title.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.description.label }}<br>
+            {{ form.description(rows=4, cols=50) }}
+            {% for error in form.description.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.department.label }}<br>
+            {{ form.department(size=32) }}
+            {% for error in form.department.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.requirements.label }}<br>
+            {{ form.requirements(rows=4, cols=50) }}
+            {% for error in form.requirements.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <a href="{{ url_for('main.jobs') }}">Back to Jobs</a>
+</div>
+{% endblock %}

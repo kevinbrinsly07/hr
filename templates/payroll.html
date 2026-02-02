@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Payroll{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2>Payroll Management</h2>
+    <a href="{{ url_for('main.add_payroll') }}" class="btn">Process Payroll</a>
+
+    <!-- Desktop Table View -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee</th>
+                    <th>Pay Period</th>
+                    <th>Gross Pay</th>
+                    <th>Deductions</th>
+                    <th>Net Pay</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payroll in payrolls %}
+                <tr>
+                    <td>{{ payroll.id }}</td>
+                    <td>{{ payroll.employee.first_name }} {{ payroll.employee.last_name }}</td>
+                    <td>{{ payroll.pay_period_start.strftime('%m/%d') if payroll.pay_period_start else 'N/A' }} - {{ payroll.pay_period_end.strftime('%m/%d') if payroll.pay_period_end else 'N/A' }}</td>
+                    <td>${{ "%.2f"|format(payroll.gross_pay) }}</td>
+                    <td>${{ "%.2f"|format(payroll.deductions) }}</td>
+                    <td>${{ "%.2f"|format(payroll.net_pay) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="card-container">
+        {% for payroll in payrolls %}
+        <div class="mobile-card">
+            <div class="card-header">
+                <h3>{{ payroll.employee.first_name }} {{ payroll.employee.last_name }}</h3>
+                <span class="card-id">#{{ payroll.id }}</span>
+            </div>
+            <div class="card-content">
+                <div class="card-row">
+                    <strong>Pay Period:</strong> {{ payroll.pay_period_start.strftime('%m/%d') if payroll.pay_period_start else 'N/A' }} - {{ payroll.pay_period_end.strftime('%m/%d') if payroll.pay_period_end else 'N/A' }}
+                </div>
+                <div class="card-row">
+                    <strong>Gross Pay:</strong> ${{ "%.2f"|format(payroll.gross_pay) }}
+                </div>
+                <div class="card-row">
+                    <strong>Deductions:</strong> ${{ "%.2f"|format(payroll.deductions) }}
+                </div>
+                <div class="card-row">
+                    <strong>Net Pay:</strong> ${{ "%.2f"|format(payroll.net_pay) }}
+                </div>
+                <div class="card-row">
+                    <strong>Hours:</strong> {{ payroll.hours_worked }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

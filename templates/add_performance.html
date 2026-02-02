@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Add Performance Review{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Add Performance Review</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.employee_id.label }}<br>
+            {{ form.employee_id() }}
+            {% for error in form.employee_id.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.reviewer_id.label }}<br>
+            {{ form.reviewer_id() }}
+            {% for error in form.reviewer_id.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.review_date.label }}<br>
+            {{ form.review_date() }}
+            {% for error in form.review_date.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.rating.label }}<br>
+            {{ form.rating() }}
+            {% for error in form.rating.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.comments.label }}<br>
+            {{ form.comments(rows=4, cols=50) }}
+            {% for error in form.comments.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.goals.label }}<br>
+            {{ form.goals(rows=4, cols=50) }}
+            {% for error in form.goals.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <a href="{{ url_for('main.performance') }}">Back to Performance</a>
+</div>
+{% endblock %}

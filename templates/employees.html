@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Employees{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2>Employee Management</h2>
+    <a href="{{ url_for('main.add_employee') }}" class="btn">Add New Employee</a>
+
+    <!-- Desktop Table View -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Hire Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.id }}</td>
+                    <td>{{ employee.first_name }} {{ employee.last_name }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{ employee.department or 'N/A' }}</td>
+                    <td>{{ employee.position or 'N/A' }}</td>
+                    <td>{{ employee.hire_date.strftime('%Y-%m-%d') if employee.hire_date else 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="card-container">
+        {% for employee in employees %}
+        <div class="mobile-card">
+            <div class="card-header">
+                <h3>{{ employee.first_name }} {{ employee.last_name }}</h3>
+                <span class="card-id">#{{ employee.id }}</span>
+            </div>
+            <div class="card-content">
+                <div class="card-row">
+                    <strong>Email:</strong> {{ employee.email }}
+                </div>
+                <div class="card-row">
+                    <strong>Department:</strong> {{ employee.department or 'N/A' }}
+                </div>
+                <div class="card-row">
+                    <strong>Position:</strong> {{ employee.position or 'N/A' }}
+                </div>
+                <div class="card-row">
+                    <strong>Hire Date:</strong> {{ employee.hire_date.strftime('%Y-%m-%d') if employee.hire_date else 'N/A' }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>Welcome to the HR Management System</h2>
+    <p>Manage your HR operations efficiently.</p>
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3>Employees</h3>
+            <p>View and manage employee information.</p>
+            <a href="{{ url_for('main.employees') }}">Go to Employees</a>
+        </div>
+        <div class="card">
+            <h3>Jobs</h3>
+            <p>Post and manage job openings.</p>
+            <a href="{{ url_for('main.jobs') }}">Go to Jobs</a>
+        </div>
+        <div class="card">
+            <h3>Applications</h3>
+            <p>Track candidate applications.</p>
+            <a href="{{ url_for('main.applications') }}">Go to Applications</a>
+        </div>
+        <div class="card">
+            <h3>Payroll</h3>
+            <p>Manage payroll and time tracking.</p>
+            <a href="{{ url_for('main.payroll') }}">Go to Payroll</a>
+        </div>
+        <div class="card">
+            <h3>Benefits</h3>
+            <p>Administer employee benefits.</p>
+            <a href="{{ url_for('main.benefits') }}">Go to Benefits</a>
+        </div>
+        <div class="card">
+            <h3>Performance</h3>
+            <p>Conduct performance reviews.</p>
+            <a href="{{ url_for('main.performance') }}">Go to Performance</a>
+        </div>
+        <div class="card">
+            <h3>Compensation</h3>
+            <p>Manage compensation plans.</p>
+            <a href="{{ url_for('main.compensation') }}">Go to Compensation</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

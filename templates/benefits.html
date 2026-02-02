@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Benefits{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2>Benefits Administration</h2>
+    <a href="{{ url_for('main.add_benefit') }}" class="btn">Add New Benefit</a>
+    <a href="{{ url_for('main.enroll_benefit') }}" class="btn">Enroll Employee</a>
+
+    <!-- Desktop Table View -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Cost</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for benefit in benefits %}
+                <tr>
+                    <td>{{ benefit.id }}</td>
+                    <td>{{ benefit.name }}</td>
+                    <td>{{ benefit.type or 'N/A' }}</td>
+                    <td>${{ "%.2f"|format(benefit.cost) }}</td>
+                    <td>{{ benefit.description or 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="card-container">
+        {% for benefit in benefits %}
+        <div class="mobile-card">
+            <div class="card-header">
+                <h3>{{ benefit.name }}</h3>
+                <span class="card-id">#{{ benefit.id }}</span>
+            </div>
+            <div class="card-content">
+                <div class="card-row">
+                    <strong>Type:</strong> {{ benefit.type or 'N/A' }}
+                </div>
+                <div class="card-row">
+                    <strong>Cost:</strong> ${{ "%.2f"|format(benefit.cost) }}
+                </div>
+                {% if benefit.description %}
+                <div class="card-row">
+                    <strong>Description:</strong> {{ benefit.description[:100] }}...
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

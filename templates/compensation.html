@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Compensation{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2>Compensation Management</h2>
+    <a href="{{ url_for('main.add_compensation') }}" class="btn">Update Compensation</a>
+
+    <!-- Desktop Table View -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee</th>
+                    <th>Base Salary</th>
+                    <th>Bonuses</th>
+                    <th>Equity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comp in compensations %}
+                <tr>
+                    <td>{{ comp.id }}</td>
+                    <td>{{ comp.employee.first_name }} {{ comp.employee.last_name }}</td>
+                    <td>${{ "%.2f"|format(comp.base_salary) }}</td>
+                    <td>${{ "%.2f"|format(comp.bonuses) }}</td>
+                    <td>${{ "%.2f"|format(comp.equity) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="card-container">
+        {% for comp in compensations %}
+        <div class="mobile-card">
+            <div class="card-header">
+                <h3>{{ comp.employee.first_name }} {{ comp.employee.last_name }}</h3>
+                <span class="card-id">#{{ comp.id }}</span>
+            </div>
+            <div class="card-content">
+                <div class="card-row">
+                    <strong>Base Salary:</strong> ${{ "%.2f"|format(comp.base_salary) }}
+                </div>
+                <div class="card-row">
+                    <strong>Bonuses:</strong> ${{ "%.2f"|format(comp.bonuses) }}
+                </div>
+                <div class="card-row">
+                    <strong>Equity:</strong> ${{ "%.2f"|format(comp.equity) }}
+                </div>
+                <div class="card-row">
+                    <strong>Total Comp:</strong> ${{ "%.2f"|format(comp.base_salary + comp.bonuses + comp.equity) }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Add Payroll{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Process Payroll</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.employee_id.label }}<br>
+            {{ form.employee_id() }}
+            {% for error in form.employee_id.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.pay_period_start.label }}<br>
+            {{ form.pay_period_start() }}
+            {% for error in form.pay_period_start.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.pay_period_end.label }}<br>
+            {{ form.pay_period_end() }}
+            {% for error in form.pay_period_end.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.hours_worked.label }}<br>
+            {{ form.hours_worked() }}
+            {% for error in form.hours_worked.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.overtime_hours.label }}<br>
+            {{ form.overtime_hours() }}
+            {% for error in form.overtime_hours.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.gross_pay.label }}<br>
+            {{ form.gross_pay() }}
+            {% for error in form.gross_pay.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.deductions.label }}<br>
+            {{ form.deductions() }}
+            {% for error in form.deductions.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <a href="{{ url_for('main.payroll') }}">Back to Payroll</a>
+</div>
+{% endblock %}

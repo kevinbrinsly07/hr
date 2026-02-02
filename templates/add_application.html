@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Add Application{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Submit Job Application</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.job_id.label }}<br>
+            {{ form.job_id() }}
+            {% for error in form.job_id.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.applicant_name.label }}<br>
+            {{ form.applicant_name(size=64) }}
+            {% for error in form.applicant_name.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.applicant_email.label }}<br>
+            {{ form.applicant_email(size=64) }}
+            {% for error in form.applicant_email.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.resume.label }}<br>
+            {{ form.resume(rows=6, cols=50) }}
+            {% for error in form.resume.errors %}
+                <span class="error">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <a href="{{ url_for('main.applications') }}">Back to Applications</a>
+</div>
+{% endblock %}
