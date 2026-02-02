@@ -49,7 +49,7 @@
                 <span class="error">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>{{ form.submit() }}</p>
+        <p>{{ form.submit(value="Add Review", class="btn") }}</p>
     </form>
     <a href="{{ url_for('main.performance') }}">Back to Performance</a>
 </div>

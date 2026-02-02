@@ -56,7 +56,7 @@
                 <span class="error">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>{{ form.submit() }}</p>
+        <p>{{ form.submit(value="Process Payroll", class="btn") }}</p>
     </form>
     <a href="{{ url_for('main.payroll') }}">Back to Payroll</a>
 </div>

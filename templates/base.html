@@ -5,57 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}HR Management System{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="nav-container">
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
                 <h1>HR Management System</h1>
-                <button class="burger-menu" id="burger-menu">
+                <button class="sidebar-close" id="sidebar-close">&times;</button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('main.index') }}" class="{% if request.endpoint == 'main.index' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-tachometer-alt"></i></span>Dashboard</a></li>
+                        <li><a href="{{ url_for('main.employees') }}" class="{% if request.endpoint == 'main.employees' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-users"></i></span>Employees</a></li>
+                        <li><a href="{{ url_for('main.jobs') }}" class="{% if request.endpoint == 'main.jobs' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-briefcase"></i></span>Jobs</a></li>
+                        <li><a href="{{ url_for('main.applications') }}" class="{% if request.endpoint == 'main.applications' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-file-alt"></i></span>Applications</a></li>
+                        <li><a href="{{ url_for('main.payroll') }}" class="{% if request.endpoint == 'main.payroll' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-money-bill-wave"></i></span>Payroll</a></li>
+                        <li><a href="{{ url_for('main.benefits') }}" class="{% if request.endpoint == 'main.benefits' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-gift"></i></span>Benefits</a></li>
+                        <li><a href="{{ url_for('main.performance') }}" class="{% if request.endpoint == 'main.performance' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-chart-line"></i></span>Performance</a></li>
+                        <li><a href="{{ url_for('main.compensation') }}" class="{% if request.endpoint == 'main.compensation' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-dollar-sign"></i></span>Compensation</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}" class="{% if request.endpoint == 'auth.logout' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span>Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('auth.login') }}" class="{% if request.endpoint == 'auth.login' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-sign-in-alt"></i></span>Login</a></li>
+                        <li><a href="{{ url_for('auth.register') }}" class="{% if request.endpoint == 'auth.register' %}active{% endif %}"><span class="nav-icon"><i class="fas fa-user-plus"></i></span>Register</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-header">
+                <button class="sidebar-toggle" id="sidebar-toggle">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
                 </button>
-                <ul id="nav-menu">
-                    {% if current_user.is_authenticated %}
-                        <li><a href="{{ url_for('main.index') }}">Dashboard</a></li>
-                        <li><a href="{{ url_for('main.employees') }}">Employees</a></li>
-                        <li><a href="{{ url_for('main.jobs') }}">Jobs</a></li>
-                        <li><a href="{{ url_for('main.applications') }}">Applications</a></li>
-                        <li><a href="{{ url_for('main.payroll') }}">Payroll</a></li>
-                        <li><a href="{{ url_for('main.benefits') }}">Benefits</a></li>
-                        <li><a href="{{ url_for('main.performance') }}">Performance</a></li>
-                        <li><a href="{{ url_for('main.compensation') }}">Compensation</a></li>
-                        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-                    {% else %}
-                        <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                        <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <main>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for message in messages %}
-                        <div class="flash">
-                            <span class="flash-text">{{ message }}</span>
-                            <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
-                        </div>
-                    {% endfor %}
+                <div class="header-title">
+                    {% block page_title %}{% endblock %}
                 </div>
-            {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
-    </main>
+            </header>
+
+            <main>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for message in messages %}
+                                <div class="flash">
+                                    <span class="flash-text">{{ message }}</span>
+                                    <button class="flash-close" onclick="this.parentElement.remove()">&times;</button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2024 HR Management System</p>
     </footer>
     <script>
-        document.getElementById('burger-menu').addEventListener('click', function() {
-            document.getElementById('nav-menu').classList.toggle('active');
+        // Sidebar toggle functionality
+        document.getElementById('sidebar-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        document.getElementById('sidebar-close').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.remove('active');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.getElementById('sidebar-toggle');
+            if (!sidebar.contains(event.target) && !toggle.contains(event.target) && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
         });
 
         // Auto-hide flash messages after 5 seconds
