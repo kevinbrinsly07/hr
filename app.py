@@ -4,12 +4,15 @@ from models import db
 from routes.auth import auth as auth_blueprint
 from routes.main import main as main_blueprint
 from flask_login import LoginManager
+from flask_migrate import Migrate
+import os
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
     db.init_app(app)
+    migrate = Migrate(app, db)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -37,4 +40,5 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
