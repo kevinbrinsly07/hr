@@ -211,6 +211,7 @@ main {
     width: 100%;
     box-sizing: border-box;
     overflow-x: hidden;
+    min-height: calc(100vh - 120px);
 }
 
 .dashboard {
@@ -439,17 +440,6 @@ tr:hover {
     font-weight: 500;
 }
 
-footer {
-    text-align: center;
-    padding: 2rem;
-    background: var(--card-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    color: var(--text-primary);
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    margin-top: auto;
-}
-
 /* Mobile Card Layout */
 .card-container {
     display: none;
@@ -610,6 +600,7 @@ footer {
     main {
         padding: 0 1rem;
         margin: 1rem auto;
+        min-height: calc(100vh - 100px);
     }
     
     .dashboard h1 {
@@ -665,6 +656,7 @@ footer {
     main {
         padding: 0 0.5rem;
         margin: 1rem auto;
+        min-height: calc(100vh - 90px);
     }
     
     .dashboard h1 {
@@ -741,6 +733,11 @@ footer {
         font-size: 1rem;
         margin-left: 0.5rem;
     }
+
+    footer {
+        padding: 1rem 0.5rem;
+        font-size: 0.8rem;
+    }
 }
 
 /* Extra small screens */
@@ -748,6 +745,7 @@ footer {
     main {
         padding: 0 0.25rem;
         margin: 0.5rem auto;
+        min-height: calc(100vh - 80px);
     }
 
     .content {
