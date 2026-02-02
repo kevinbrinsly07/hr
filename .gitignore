@@ -148,6 +148,12 @@ Thumbs.db
 *.db
 *.sqlite
 *.sqlite3
+*.sqlite3-journal
+hr_system.db
+hr_system.db-journal
+instance/*.db
+instance/*.sqlite
+instance/*.sqlite3
 
 # Logs
 *.log
